@@ -1,4 +1,11 @@
-apiVersion: extensions/v1beta1
+{{- if .Capabilities.APIVersions.Has "apps/v1" }}
+apiVersion: apps/v1
+{{- else if .Capabilities.APIVersions.Has "extensions/v1beta1" }}
+apiVersion: extensions/v1beta1	
+{{- else }}
+apiVersion: apps/v1
+{{- end }}
+
 kind: Deployment
 metadata:
   name: {{ include "chartmuseum.fullname" . }}
